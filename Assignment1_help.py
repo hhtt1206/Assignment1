@@ -84,12 +84,14 @@ class Assignment1:
             print(f"Printer ID: {printerID} : now available")
             #Write code here for Binary and counting Semaphore
             # Acquire the binary semaphore to ensure mutual exclusion
-
+            try:
+                self.outer.binary.acquire()
             # Print from the queue
-            self.outer.print_list.queuePrint(printerID)
-
+                self.outer.print_list.queuePrint(printerID)
+                self.outer.semaphore.release()
+            finally:
             # Release the binary semaphore
-           
+                self.outer.binary.release()
             # Increment the semaphore count so that machines can send requests
 
 
